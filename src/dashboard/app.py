@@ -223,10 +223,7 @@ def build_forecast_tab():
 # ── App assembly ──────────────────────────────────────────────────────────────
 
 def build_app() -> gr.Blocks:
-    with gr.Blocks(
-        title="Singapore HDB AVM",
-        theme=gr.themes.Soft(),
-    ) as demo:
+    with gr.Blocks(title="Singapore HDB AVM") as demo:
         gr.Markdown(
             "# Singapore HDB Resale AVM\n"
             "**Automated Valuation Model** trained on 228k+ HDB transactions (2017–2026). "
@@ -240,5 +237,8 @@ def build_app() -> gr.Blocks:
 
 
 if __name__ == "__main__":
+    import os
+
+    port = int(os.environ.get("PORT", 7860))
     app = build_app()
-    app.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    app.launch(server_name="0.0.0.0", server_port=port, share=False, theme=gr.themes.Soft())
