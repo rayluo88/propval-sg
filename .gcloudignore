@@ -1,0 +1,26 @@
+# Cloud Build ignore — inherits .gitignore but re-includes model artifacts needed by Docker
+.gcloudignore
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+
+# Dev only
+.env
+.venv/
+dist/
+build/
+*.egg-info/
+notebooks/
+
+# Large raw data — only aggregated parquets are needed (included below)
+data/hdb_resale.parquet
+data/*.csv
+
+# DO NOT ignore: models/ and data/forecasts.parquet, data/hdb_monthly_agg.parquet
+# These are required at container runtime and excluded from git but must ship in the build context.

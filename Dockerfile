@@ -17,7 +17,6 @@ RUN uv sync --frozen --no-dev
 # Source + artifacts
 COPY src/ ./src/
 COPY models/ ./models/
-COPY data/hdb_resale.parquet ./data/
 COPY data/hdb_monthly_agg.parquet ./data/
 COPY data/forecasts.parquet ./data/
 

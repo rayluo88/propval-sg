@@ -2,6 +2,8 @@
 
 A production-grade **Automated Valuation Model (AVM)** for Singapore HDB resale flats, with demand forecasting and market trend analysis. Built on 228,000+ real transactions from 2017 to Apr 2026.
 
+**Live demo:** https://propval-sg-775010344611.asia-southeast1.run.app
+
 ---
 
 ## Overview
