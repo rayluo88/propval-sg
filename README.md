@@ -2,7 +2,7 @@
 
 A production-grade **Automated Valuation Model (AVM)** for Singapore HDB resale flats, with demand forecasting and market trend analysis. Built on 228,000+ real transactions from 2017 to Apr 2026.
 
-**Live demo:** https://propval-sg-775010344611.asia-southeast1.run.app
+**[Live Demo](https://propval-sg-775010344611.asia-southeast1.run.app)** — hosted on GCP Cloud Run (asia-southeast1)
 
 ---
 
@@ -60,6 +60,8 @@ All models are trained on a **time-based holdout** (Jun 2024–Apr 2026 as test 
 | Dashboard | Gradio |
 | Data store | PostgreSQL (optional) / Parquet (local) |
 | Containerisation | Docker + Docker Compose |
+| Cloud deployment | GCP Cloud Run (asia-southeast1) |
+| Container registry | GCP Artifact Registry |
 | CI | GitHub Actions |
 | Linting | Ruff |
 | Testing | pytest |
@@ -136,6 +138,26 @@ uv run python -m src.dashboard.app
 
 ```bash
 docker compose up
+```
+
+### GCP Cloud Run
+
+The dashboard is containerised and deployed as a single Cloud Run service using the `deploy` Dockerfile target.
+
+```bash
+# Build and push image via Cloud Build
+gcloud builds submit \
+  --tag asia-southeast1-docker.pkg.dev/PROJECT/propval-sg/app \
+  --project PROJECT
+
+# Deploy
+gcloud run deploy propval-sg \
+  --image asia-southeast1-docker.pkg.dev/PROJECT/propval-sg/app \
+  --region asia-southeast1 \
+  --memory 2Gi --cpu 2 \
+  --allow-unauthenticated \
+  --port 7860 \
+  --min-instances 0 --max-instances 2
 ```
 
 ---

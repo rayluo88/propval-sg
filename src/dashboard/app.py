@@ -362,13 +362,15 @@ CHART_LAYOUT = dict(
         linecolor="#d6d3cd",
         tickfont=dict(family="IBM Plex Mono, monospace", size=10, color="#78716c"),
     ),
-    legend=dict(
-        bgcolor="rgba(255,255,255,0.9)",
-        bordercolor="#d6d3cd",
-        borderwidth=1,
-        font=dict(size=11, family="Source Sans 3, sans-serif", color="#44403c"),
-    ),
     margin=dict(l=60, r=24, t=60, b=50),
+)
+
+CHART_LEGEND = dict(
+    bgcolor="rgba(255,255,255,0.9)",
+    bordercolor="#d6d3cd",
+    borderwidth=1,
+    font=dict(size=11, family="Source Sans 3, sans-serif", color="#44403c"),
+    orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
 )
 
 COLORS = dict(
@@ -520,10 +522,7 @@ def plot_trends(town, flat_type, show_volume):
         yaxis_title="Median Price (SGD)",
         hovermode="x unified",
         height=480,
-        legend=dict(
-            **CHART_LAYOUT["legend"],
-            orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
-        ),
+        legend=CHART_LEGEND,
     )
     fig.update_layout(**layout)
     return fig
@@ -543,7 +542,7 @@ def build_trends_tab():
             )
             show_vol = gr.Checkbox(value=True, label="Show transaction volume")
 
-        plot = gr.Plot()
+        plot = gr.Plot(value=plot_trends("ANG MO KIO", "4 ROOM", True), show_label=False)
         btn = gr.Button("Show Trends", variant="primary")
         btn.click(plot_trends, inputs=[town, flat_type, show_vol], outputs=plot)
 
@@ -607,10 +606,7 @@ def plot_forecast(town, flat_type):
         yaxis_title="Median Price (SGD)",
         hovermode="x unified",
         height=480,
-        legend=dict(
-            **CHART_LAYOUT["legend"],
-            orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
-        ),
+        legend=CHART_LEGEND,
     )
     fig.update_layout(**layout)
     return fig
@@ -630,7 +626,7 @@ def build_forecast_tab():
                 choices=FLAT_TYPES, value="4 ROOM", label="Flat Type"
             )
 
-        plot = gr.Plot()
+        plot = gr.Plot(value=plot_forecast("ANG MO KIO", "4 ROOM"), show_label=False)
         btn = gr.Button("Show Forecast", variant="primary")
         btn.click(plot_forecast, inputs=[town, flat_type], outputs=plot)
 
